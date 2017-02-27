@@ -184,7 +184,6 @@ void AssignExpr::Check(){
         ReportError::IncompatibleOperands(op, left->GetType(), right->GetType());
         this->SetType(Type::errorType);
     }
-    // std::cerr<<"not segfault yet============"<<std::endl;
     char* tokenString = op->getTokenString();
 
     if((tokenString[0]) != '='){
@@ -193,7 +192,6 @@ void AssignExpr::Check(){
             this->SetType(Type::errorType);
         }
     }
-    // std::cerr<<"not segfault yet============="<<std::endl;
 }
 void ArithmeticExpr::Check(){
     if(left != NULL){
@@ -345,6 +343,13 @@ void Call::PrintChildren(int indentLevel) {
    if (field) field->Print(indentLevel+1);
    if (actuals) actuals->PrintAll(indentLevel+1, "(actuals) ");
 }
+void PostfixExpr::Check(){
+    left->Check();
+    if(left->GetType() != Type::intType && left->GetType() != Type::floatType){
+        ReportError::IncompatibleOperand(op, left->GetType());
+        this->SetType(Type::errorType);
+    }
+}
 void Call::Check(){
     int currentScope = scopeLevel;
     Type* type = NULL;
@@ -392,9 +397,5 @@ void Call::Check(){
             }
         }
     }
-
-
-
-
 
 }

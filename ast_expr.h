@@ -78,7 +78,7 @@ class FloatConstant: public Expr
     const char *GetPrintNameForNode() { return "FloatConstant"; }
     void PrintChildren(int indentLevel);
     virtual void Check(){ Expr::SetType(Type::floatType); }
-    // Type* GetType(){ return Type::floatType;};
+    
 };
 
 class BoolConstant : public Expr 
@@ -183,7 +183,7 @@ class PostfixExpr : public CompoundExpr
   public:
     PostfixExpr(Expr *lhs, Operator *op) : CompoundExpr(lhs,op) {}
     const char *GetPrintNameForNode() { return "PostfixExpr"; }
-
+    virtual void Check();
 };
 
 class ConditionalExpr : public Expr
